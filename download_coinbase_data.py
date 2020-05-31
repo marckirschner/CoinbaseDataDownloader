@@ -1,18 +1,6 @@
-"""
-    Usage: python download_coinbase_data.py --api_key --secret_key --passcode --granularity --market --filename]
-
-    Options:
-        -h --help       Show this screen
-        -a --api_key    Coinbase API Key
-        -s --secret_key Coinbase Secret Key
-        -p --passcode  Coinbase Passcode
-        -g --granularity candle width in seconds, so granularity = 15 min = 15 * 60
-        -n --num_days go back num_days of historical data
-        -f --filename read this csv file instead (can be csv file output of CoinbaseDataDownloader.get_data)
-        -m --market the currency pair, i.e. ETH-USD
-
-    Example:
-        python download_coinbase_data.py --api_key="apikey" --secret_key="secret_key" --passcode="passcode" --granularity=15*60 --market="ETH-USD"
+"""Usage:
+  download_coinbase.py <api> <secret> <pass> --market=<market> --granularity=granularity --num_days=num_days [--filename=filename] [-v]
+  download_coinbase.py -h | --help | --version
 """
 
 __author__ = "Marc J Kirschner"
@@ -20,13 +8,14 @@ __copyright__ = "Copyright (C) 2020 Marc J Kirschner"
 __license__ = "Public Domain"
 __version__ = "1.0"
 
+import sys
+from docopt import docopt
 from datetime import timedelta
 from datetime import datetime
-
 import time
 import pandas as pd
 import cbpro
-from docopt import docopt
+
 
 class CoinbaseDataDownloader:
     def __init__(self, api_key, secret_key, passcode):
@@ -38,7 +27,7 @@ class CoinbaseDataDownloader:
         @filename if filename is None then read data from coinbase for currency pair @market
                   if filename is not none then read the csv file and return a data frame
         @market the currency pair, i.e. ETH-USD
-        @cointime number of seconds to wait between each request made to coinbase. 
+        @cointime number of seconds to wait between each request made to coinbase.
                   coinbase rate limits and will return an error if you exceed a threshold
                   of requests in an allotted amount of time
     """
@@ -86,10 +75,27 @@ class CoinbaseDataDownloader:
             final_df = pd.read_csv(filename)
             return final_df
 
-def main():
-    args = docopt(__doc__)
-    print(args)
 
+def main():
+    args = docopt(__doc__, version='0.1.1rc')
+
+    api_key = args['<api>']
+    secret_key = args['<api>']
+    passcode = args['<pass>']
+    filename = args['--filename']
+    market = args['--market']
+    granularity = args['--granularity']
+    num_days = args['--num_days']
+
+    try:
+        granularity = int(granularity)
+        num_days = int(num_days)
+    except Exception as e:
+        print(f"Invalid parameter:, {e}")
+        sys.exit()
+
+    cdd =CoinbaseDataDownloader(api_key, secret_key, passcode)
+    cdd.get_data(granularity=granularity, num_days=num_days, filename=filename, market=market, cointime=0.5)
 
 if __name__ == '__main__':
     main()
