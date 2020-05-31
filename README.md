@@ -19,5 +19,5 @@ c = CoinbaseDataDownloader( "API_KEY", "SECRET_KEY", "PASS_PHRASE")
 # Download remote data from Coinbase
 df = c.get_data( granularity=900, market="ETH-USD", num_days=1)
 # Read data from csv file
-df = c.get_data( granularity=900, filename="ETH-USD_2020-04-30_2020-05-30.csv")
+df = c.get_data(filename="ETH-USD_2020-04-30_2020-05-30.csv")
 ```
