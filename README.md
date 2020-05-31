@@ -9,12 +9,6 @@ To download the last 10 days of ETH-USD 15 minute bar data and save to a CSV fil
 python download_coinbase_data.py "API_KEY" "SECRET_KEY" "PASS_PHRASE"  --granularity=900 --market="ETH-USD" --num_days=10
 ``
 
-To read data from a csv file:
-
-```
-python download_coinbase_data.py "API_KEY" "SECRET_KEY" "PASS_PHRASE"  --granularity=900 --num_days=10 --filename=
-```
-
 ## Import library
 To return a pandas dataframe do the following
 
