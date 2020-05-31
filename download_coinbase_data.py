@@ -53,7 +53,7 @@ class CoinbaseDataDownloader:
                 time.sleep(cointime)
 
             time.sleep(cointime)
-            data = self.api.get_product_historic_rates(market, granularity=15 * 60)
+            data = self.api.get_product_historic_rates(market, granularity=granularity)
             df = pd.DataFrame(data, columns=["Time", "Low", "High", "Open", "Close", "Vol"])
             df = df.reindex(index=df.index[::-1])
             df = df.reset_index()
