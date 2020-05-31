@@ -6,7 +6,7 @@
 __author__ = "Marc J Kirschner"
 __copyright__ = "Copyright (C) 2020 Marc J Kirschner"
 __license__ = "Public Domain"
-__version__ = "1.0"
+__version__ = "0.1.1rc"
 
 import sys
 from docopt import docopt
@@ -77,7 +77,7 @@ class CoinbaseDataDownloader:
 
 
 def main():
-    args = docopt(__doc__, version='0.1.1rc')
+    args = docopt(__doc__, version=__version__)
 
     api_key = args['<api>']
     secret_key = args['<api>']
